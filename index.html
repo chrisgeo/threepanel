@@ -2,34 +2,154 @@
 <html>
   <head>
     <!-- eventually add anything relavant here -->
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      a, a:link, a:visited, a:active {
+        text-decoration: none;
+        color: rgb(142, 159, 13);
+      }
+      
+      .tabs {
+        line-height: 1em;
+        min-height: 5em;
+        position: relative;
+        z-index: 0;/*reset to zero so it's always behind the selection/content*/
+      }
+
+      .tabs > div {
+        display: inline;
+      }
+
+      .tabs a {
+        border: 1px solid rgb(198, 198, 188);
+        border-bottom: 0 none;
+      }
+
+      .tabs > div > a {
+        display: block;
+        float: left;
+        position: relative;
+        margin-left: -1px;
+        padding: 10px 15px 10px 15px;
+      }
+
+      .tabs > div:not(:target) > a {
+        background: rgba(0,0,0, 0.5) repeat scroll 0 0;
+        color: rgb(255,255,255);
+      }
+
+      .tabs div:target a {
+        color: rgb(198, 198, 188);
+        background-color: #fff;
+        z-index: 3;
+        /*padding-bottom: 11px; //chrome hack */
+      }
+
+      .tabs div div {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 36px;
+        z-index: -2;
+      }
+
+      .tabs > div:not(:target) > div {
+        position: absolute;
+        display: none;
+      }
+
+      .tabs > div:target > div {
+        position: absolute;
+        z-index: 1;
+        border: 1px solid rgb(198, 198, 188);
+        padding: 10px;
+      }
+
+      hr {
+        margin: 10px 0 10px 0;
+      }
+    </style>
   </head>
   <body>
     <h1>We have a few choices in how we want to semantically make 'tab panels'...</h1>
-    <h2>The classical HTML UL/OL plus divs for content area...</h2>
-    <ol class="tabview">
-      <li>
-        <a href="#tab-1">tab-1</a>
-      </li>
-      <li>
-        <a href="#tab-2">tab-2</a>
-      </li>
-      <li>
-        <a href="#tab-3">tab-3</a>
-      </li>
-    </ol>
-    <div class="panel-container">
-      <div id="tab-1"></div>
-      <div id="tab-2"></div>
-      <div id="tab-3"></div>
+    <h2>Getting dirty...</h2>
+    <p>
+    This would be awesome to be able to do in CSS3 and completely semantic - but to hack our way through this we cannot stay semantic. Bummer.
+    <br />
+    So what we have to do, to stay CSS3 only but lacking IE support (degrading gracefully of course) is use the :target pseudo-class to gain our functionality.
+    This way we get code like the below:
+    </p>
+    <pre><code>
+    &lt;div class="tabview"&gt;
+      &lt;div class="tabs"&gt;
+        &lt;div id="tab-1"&gt;
+          &lt;a href="#tab-1"&gt;tab-1&lt;/a&gt;
+          &lt;div&gt;tab-1&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id="tab-2"&gt;
+          &lt;a href="#tab-2"&gt;tab-2&lt;/a&gt;
+          &lt;div&gt;tab-2&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id="tab-3"&gt;
+          &lt;a href="#tab-3"&gt;tab-3&lt;/a&gt;
+          &lt;div&gt;tab-3&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    </code></pre>
+    <div class="tabview">
+      <div class="tabs">
+        <div id="tab-1">
+          <a href="#tab-1">tab-1</a>
+          <div>tab-1</div>
+        </div>
+        <div id="tab-2">
+          <a href="#tab-2">tab-2</a>
+          <div>tab-2</div>
+        </div>
+        <div id="tab-3">
+          <a href="#tab-3">tab-3</a>
+          <div>tab-3</div>
+        </div>
+      </div>
     </div>
+    <hr />
+    <h1>Semantic Notes</h1>
+    <p>Even though we should be doing it semantically as much as possible, for screen readers especially, we can at least try and make it as ARIA compliant as I did above. Here's what a few example semantically would look like. This would, unfortunately, require javascript to work correctly</p>
+    <h2>Tradition UL/OL + container DIV with children DIVs for content</h2>
+    <pre><code>
+    &lt;div&gt;
+      &lt;ol class="tabview group"&gt;
+        &lt;li&gt;
+          &lt;a href="#tab-1"&gt;tab-1&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="#tab-2"&gt;tab-2&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="#tab-3"&gt;tab-3&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ol&gt;
+      &lt;div class="panel-container"&gt;
+        &lt;div id="tab-1"&gt;tab-1&lt;/div&gt;
+        &lt;div id="tab-2"&gt;tab-2&lt;/div&gt;
+        &lt;div id="tab-3"&gt;tab-3&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    </code></pre>
     <h2>Or... My personal preference... <a href="http://www.w3.org/TR/html401/struct/lists.html#h-10.3" accesskey="s">HTML definition lists</a></h2>
-    <dl>
-      <dt>tab-1</dt>
-      <dd id="dd-tab-1">tab-1</dd>
-      <dt>tab-2</dt>
-      <dd id="dd-tab-2">tab-2</dd>
-      <dt>tab-3</dt>
-      <dd id="dd-tab-3">tab-3</dd>
-    </dl>
+    <pre><code>
+    &lt;dl&gt;
+      &lt;dt&gt;tab-1&lt;/dt&gt;
+      &lt;dd id="dd-tab-1"&gt;tab-1&lt;/dd&gt;
+      &lt;dt&gt;tab-2&lt;/dt&gt;
+      &lt;dd id="dd-tab-2"&gt;tab-2&lt;/dd&gt;
+      &lt;dt&gt;tab-3&lt;/dt&gt;
+      &lt;dd id="dd-tab-3"&gt;tab-3&lt;/dd&gt;
+    &lt;/dl&gt;
+    </code></pre>
   </body>
 </html>
