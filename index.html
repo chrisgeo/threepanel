@@ -26,6 +26,13 @@
       .tabs a {
         border: 1px solid rgb(198, 198, 188);
         border-bottom: 0 none;
+	      -webkit-transition: background-color 0.2s linear;
+        -moz-transition: background-color 0.2s linear;
+        -o-transition: background-color 0.2s linear;
+      }
+
+      .tabs a:hover {
+        background-color: #5a87dd;
       }
 
       .tabs > div > a {
@@ -39,6 +46,10 @@
       .tabs > div:not(:target) > a {
         background: rgba(0,0,0, 0.5) repeat scroll 0 0;
         color: rgb(255,255,255);
+      }
+
+      .tabs > div:not(:target) > a:hover {
+        background-color: #5a87dd;
       }
 
       .tabs div:target a {
