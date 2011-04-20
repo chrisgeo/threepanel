@@ -3,7 +3,7 @@
   <head>
     <!-- eventually add anything relavant here -->
     <style type="text/css">
-      * {
+      html,body,ul,ol,li {
         margin: 0;
         padding: 0;
       }
@@ -29,8 +29,8 @@
       }
 
       .tabs > div > a {
-        display: block;
-        float: left;
+        display: inline-block;
+        /*float: left;*/
         position: relative;
         margin-left: -1px;
         padding: 10px 15px 10px 15px;
@@ -46,26 +46,27 @@
         background-color: #fff;
         z-index: 3;
         /*padding-bottom: 11px; //chrome hack */
+        border-bottom: 2px solid #fff; /* hack for chrome being futzy */
       }
 
       .tabs div div {
+        background: #fff;
+        padding: 10px;
         bottom: 0;
         left: 0;
         right: 0;
         top: 36px;
         z-index: -2;
+        border: 1px solid rgb(198, 198, 188);
       }
 
       .tabs > div:not(:target) > div {
         position: absolute;
-        display: none;
       }
 
       .tabs > div:target > div {
         position: absolute;
         z-index: 1;
-        border: 1px solid rgb(198, 198, 188);
-        padding: 10px;
       }
 
       hr {
