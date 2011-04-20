@@ -1,0 +1,35 @@
+<!doctype>
+<html>
+  <head>
+    <!-- eventually add anything relavant here -->
+  </head>
+  <body>
+    <h1>We have a few choices in how we want to semantically make 'tab panels'...</h1>
+    <h2>The classical HTML UL/OL plus divs for content area...</h2>
+    <ol class="tabview">
+      <li>
+        <a href="#tab-1">tab-1</a>
+      </li>
+      <li>
+        <a href="#tab-2">tab-2</a>
+      </li>
+      <li>
+        <a href="#tab-3">tab-3</a>
+      </li>
+    </ol>
+    <div class="panel-container">
+      <div id="tab-1"></div>
+      <div id="tab-2"></div>
+      <div id="tab-3"></div>
+    </div>
+    <h2>Or... My personal preference... <a href="http://www.w3.org/TR/html401/struct/lists.html#h-10.3" accesskey="s">HTML definition lists</a></h2>
+    <dl>
+      <dt>tab-1</dt>
+      <dd id="dd-tab-1">tab-1</dd>
+      <dt>tab-2</dt>
+      <dd id="dd-tab-2">tab-2</dd>
+      <dt>tab-3</dt>
+      <dd id="dd-tab-3">tab-3</dd>
+    </dl>
+  </body>
+</html>
